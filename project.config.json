@@ -1,0 +1,15 @@
+{
+	"description": "A WePY project",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wx7e4b3a95c073af33",
+	"projectname": "wormwood",
+	"miniprogramRoot": "./dist",
+	"condition": {}
+}
