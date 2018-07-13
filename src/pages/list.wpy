@@ -1,0 +1,52 @@
+<style lang="less">
+</style>
+
+<template>
+  <view class="container">
+    <view>this is filter bar</view>
+    <listBlock />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import ListBlock from '@/components/listBlock'
+
+@connect({
+  num(state) {
+    return state.counter.num
+  },
+  asyncNum(state) {
+    return state.counter.asyncNum
+  },
+  sumNum(state) {
+    return state.counter.num + state.counter.asyncNum
+  }
+})
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: 'list'
+  }
+  components = {
+    listBlock: ListBlock
+  }
+  mixins = []
+  data = {}
+  computed = {}
+  methods = {}
+  events = {}
+  onLoad() {
+    // wepy.setTabBarBadge({
+    //   index: 1,
+    //   text: `${this.sumNum}`
+    // })
+  }
+  onShow() {
+    // wepy.setTabBarBadge({
+    //   index: 1,
+    //   text: `${this.sumNum}`
+    // })
+  }
+}
+</script>

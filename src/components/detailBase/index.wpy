@@ -1,0 +1,94 @@
+<!--  -->
+<template>
+  <view class="detail-base">
+    <view class="border-bottom">
+      <view class="detail-base-title">title</view>
+      <view class="detail-base-second">
+        <price class="left" />
+        <share class="right" />
+      </view>
+    </view>
+    <view class="icon-group">
+      <repeat for="{{tips}}" key="index" item="item">
+        <tipIcon class="icon-item" :info="item">
+          <icon type="success_no_circle" size="14" slot="icon" class="icon"/>
+          <text slot="des" class="des">{{ item.text }}</text>
+        </tipIcon>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import TipIcon from './tipIcon'
+import Price from './price'
+import Share from './share'
+export default class Example extends wepy.component {
+  props = {}
+  data = {
+    tips: [
+      {
+        text: '正品保障'
+      },
+      {
+        text: '极速发货'
+      },
+      {
+        text: '7天退货'
+      }
+    ]
+  }
+  components = {
+    tipIcon: TipIcon,
+    price: Price,
+    share: Share
+  }
+  methods = {}
+  events = {}
+  watch = {}
+  computed = {}
+  onLoad() {}
+  onShow() {}
+}
+</script>
+
+<style lang='less' scoped>
+.detail-base {
+  background: #fff;
+  .border-bottom {
+    padding: 20rpx;
+    border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+
+    .detail-base-title {
+      font-size: 28rpx;
+      font-weight: bold;
+      // padding-bottom: 32rpx;
+    }
+    .detail-base-second {
+      display: flex;
+      align-items: center;
+      .left {
+        flex: 1;
+      }
+    }
+  }
+  .icon-group {
+    padding: 40rpx 20rpx;
+    .icon-item {
+      margin-right: 24rpx;
+      padding-left: 32rpx;
+      position: relative;
+      .icon {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+      .des {
+        font-size: 24rpx;
+      }
+    }
+  }
+}
+</style>

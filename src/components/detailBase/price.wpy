@@ -1,0 +1,41 @@
+<!--  -->
+<template>
+  <view>
+    <text class="current">￥42</text>
+    <text class="origin">￥92</text>
+    <text class="count">销量：8424件</text>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Example extends wepy.component {
+  props = {}
+  data = {}
+  components = {}
+  methods = {}
+  events = {}
+  watch = {}
+  computed = {}
+  onLoad() {}
+  onShow() {}
+}
+</script>
+
+<style lang='less' scoped>
+.current {
+  color: red;
+  font-size: 28rpx;
+  padding-right: 28rpx;
+  font-weight: bold;
+}
+.origin {
+  padding-right: 28rpx;
+  color: #999;
+  text-decoration: line-through;
+}
+.count {
+  padding-right: 28rpx;
+  color: #999;
+}
+</style>

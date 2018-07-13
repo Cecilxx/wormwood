@@ -1,0 +1,56 @@
+<style lang="less" scoped>
+.card {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  .img {
+    width: 100%;
+  }
+  .price {
+    font-size: 14px;
+    color: red;
+    text-align: center;
+  }
+}
+</style>
+
+<template>
+  <view class="card" @tap="click">
+    <image src="{{info.url}}" class="img" style="{{ info.imgStyle }}"/>
+    <view class="title">{{ info.title }}</view>
+    <view class="price">{{ info.price }}</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Card extends wepy.component {
+  props = {
+    info: {
+      type: Object,
+      default: {}
+    },
+    imgStyle: {
+      type: String
+    }
+  }
+  data = {
+    style: {
+      color: 'red'
+    }
+  }
+  computed = {
+    img() {
+      return `background-image: url('${this.url}')`
+    }
+  }
+  methods = {
+    click() {
+      console.log('跳转至详情页')
+      wepy.navigateTo({
+        url: 'detail'
+      })
+    }
+  }
+}
+</script>

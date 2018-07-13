@@ -1,0 +1,28 @@
+<style lang="less" scoped>
+.welfare {
+  .flex {
+    display: flex;
+    .flex-item {
+      flex: 1;
+      &:first-child {
+        margin-right: 20px;
+      }
+    }
+  }
+}
+</style>
+
+<template>
+  <view class="welfare">
+    <view>艾草百科</view>
+    <view class="flex">
+      <button class="flex-item">穴位查询</button>
+      <button class="flex-item">我的文章</button>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Welfare extends wepy.component {}
+</script>

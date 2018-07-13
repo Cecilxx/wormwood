@@ -1,10 +1,15 @@
 <style lang="less">
 .container {
+  font-size: 12px;
+  box-sizing: border-box;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+}
+page {
+  background: rgb(247, 247, 251);
+  line-height: 1.5;
+}
+view {
+  // width: 100%;
   box-sizing: border-box;
 }
 </style>
@@ -22,13 +27,42 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
+      'pages/index',
+      'pages/mine',
+      'pages/car',
+      'pages/list',
+      'pages/detail'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      selectedColor: '#333',
+      position: 'bottom',
+      borderStyle: 'black',
+      list: [
+        {
+          iconPath: 'images/home.png',
+          selectedIconPath: 'images/home_selected.png',
+          pagePath: 'pages/index',
+          text: 'text1'
+        },
+        {
+          iconPath: 'images/car.png',
+          selectedIconPath: 'images/car_selected.png',
+          pagePath: 'pages/car',
+          text: 'text2'
+        },
+        {
+          iconPath: 'images/my.png',
+          selectedIconPath: 'images/my_selected.png',
+          pagePath: 'pages/mine',
+          text: '我的'
+        }
+      ]
     }
   }
 
@@ -36,7 +70,7 @@ export default class extends wepy.app {
     userInfo: null
   }
 
-  constructor () {
+  constructor() {
     super()
     this.use('requestfix')
   }
@@ -45,7 +79,7 @@ export default class extends wepy.app {
     this.testAsync()
   }
 
-  sleep (s) {
+  sleep(s) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve('promise resolved')
@@ -53,7 +87,7 @@ export default class extends wepy.app {
     })
   }
 
-  async testAsync () {
+  async testAsync() {
     const data = await this.sleep(3)
     console.log(data)
   }
@@ -64,7 +98,7 @@ export default class extends wepy.app {
       return this.globalData.userInfo
     }
     wepy.getUserInfo({
-      success (res) {
+      success(res) {
         that.globalData.userInfo = res.userInfo
         cb && cb(res.userInfo)
       }

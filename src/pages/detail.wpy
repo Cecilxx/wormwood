@@ -1,0 +1,77 @@
+<style lang="less">
+</style>
+
+<template>
+  <view class="container">
+    <swiper
+      style="height: 100vw;"
+      imgStyle="height: 100%"
+      :autoplay.sync="autoplay"
+      :imgUrls.sync="imgUrls"
+      @clickFn.user="previewImg"
+      />
+    <detailBase />
+    <detailTab />
+    <detailBtn />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import Swiper from 'components/common/swiper'
+import DetailBase from 'components/detailBase/index'
+import DetailTab from 'components/detailTab/index'
+import DetailBtn from 'components/detailBtn'
+
+@connect({
+  num(state) {
+    return state.counter.num
+  },
+  asyncNum(state) {
+    return state.counter.asyncNum
+  },
+  sumNum(state) {
+    return state.counter.num + state.counter.asyncNum
+  }
+})
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: 'detail'
+  }
+  components = {
+    swiper: Swiper,
+    detailBase: DetailBase,
+    detailTab: DetailTab,
+    detailBtn: DetailBtn
+  }
+  mixins = []
+  data = {
+    autoplay: false,
+    imgUrls: []
+  }
+  computed = {}
+  methods = {
+    previewImg() {
+      wepy.previewImage({
+        urls: this.imgUrls
+      })
+    }
+  }
+  events = {}
+  onLoad() {
+    this.imgUrls = [
+      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+    ]
+    this.$apply()
+  }
+  onShow() {
+    // wepy.setTabBarBadge({
+    //   index: 1,
+    //   text: `${this.sumNum}`
+    // })
+  }
+}
+</script>

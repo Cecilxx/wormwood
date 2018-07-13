@@ -1,0 +1,8 @@
+<template>
+  <view>this is list</view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class List extends wepy.component {}
+</script>

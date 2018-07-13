@@ -1,0 +1,31 @@
+<!--  -->
+<template>
+  <!-- <view @tap="share">
+    <view class="icon" />
+    <view class="text">分享</view>
+  </view> -->
+  <actIcon text="分享" @click.user="click" :src="shareIcon" />
+</template>
+
+<script>
+import wepy from 'wepy'
+import ActIcon from 'components/common/actIcon'
+import { share } from '@/utils/img'
+
+export default class Example extends wepy.component {
+  components = {
+    actIcon: ActIcon
+  }
+  data = {
+    shareIcon: share
+  }
+  methods = {
+    click() {
+      console.log('share')
+    }
+  }
+}
+</script>
+
+<style lang='less' scoped>
+</style>

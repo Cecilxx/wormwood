@@ -1,0 +1,43 @@
+<!--  -->
+<template>
+  <view>
+    <view>introduction</view>
+    <view>introduction</view>
+    <view>introduction</view>
+    <view>introduction</view>
+    <view>introduction</view>
+    <view>introduction</view>
+    <view>introduction</view>
+    <view>introduction</view>
+    <view>introduction</view>
+    <view>introduction</view>
+    <view>introduction</view>
+    <view>introduction</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Example extends wepy.component {
+  props = {}
+
+  data = {}
+
+  components = {}
+
+  methods = {}
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  onLoad() {}
+
+  onShow() {}
+}
+</script>
+
+<style lang='less' scoped>
+</style>

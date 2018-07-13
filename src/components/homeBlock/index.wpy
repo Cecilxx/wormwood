@@ -1,0 +1,20 @@
+<style scoped lang="less">
+</style>
+
+<template>
+  <view>
+    <blockItem />
+    <blockItem />
+    <blockItem />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import BlockItem from './blockItem'
+export default class List extends wepy.component {
+  components = {
+    blockItem: BlockItem
+  }
+}
+</script>

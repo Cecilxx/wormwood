@@ -1,0 +1,115 @@
+<style lang="less">
+.navbar {
+  .page,
+  .page__bd {
+    height: 100%;
+    background: #fff;
+  }
+  .page__bd {
+    padding-bottom: 0;
+    .weui-tab {
+      position: relative;
+      height: 100%;
+      .weui-navbar {
+        display: flex;
+        position: relative;
+        border-bottom: 1rpx solid #cccccc;
+        .weui-navbar__item {
+          position: relative;
+          display: block;
+          flex: 1;
+          padding: 26rpx 0;
+          text-align: center;
+          font-size: 0;
+          &.weui-bar__item_on {
+            color: #1aad19;
+          }
+          .weui-navbar__title {
+            display: inline-block;
+            font-size: 15px;
+            max-width: 8em;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-wrap: normal;
+          }
+        }
+        .weui-navbar__slider {
+          position: absolute;
+          content: ' ';
+          left: 0;
+          bottom: 0;
+          height: 4rpx;
+          width: 6em;
+          background-color: #1aad19;
+          transition: transform 0.3s;
+        }
+      }
+      .weui-tab__content {
+        padding: 20rpx 20rpx 100rpx 20rpx;
+      }
+    }
+  }
+}
+</style>
+
+<template>
+  <view class="navbar page">
+    <view class="page__bd">
+      <view class="weui-tab">
+        <view class="weui-navbar">
+          <view wx:for="{{tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+          <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px)"></view>
+        </view>
+        <view class="weui-tab__panel">
+          <view class="weui-tab__content" hidden="{{activeIndex !== 0}}">
+            <introduction />
+          </view>
+          <view class="weui-tab__content" hidden="{{activeIndex !== 1}}">
+            <preview />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import Introduction from './introduction'
+import Preview from './preview'
+
+const sliderWidth = 72 // 需要设置slider的宽度，用于计算中间位置
+export default class NavBar extends wepy.component {
+  components = {
+    introduction: Introduction,
+    preview: Preview
+  }
+  data = {
+    tabs: ['商品介绍', '评价'],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0
+  }
+  methods = {
+    tabClick(e) {
+      this.sliderOffset = e.currentTarget.offsetLeft
+      this.activeIndex = ~~e.currentTarget.id
+    }
+  }
+  onLoad() {
+    let windowWidth = ''
+    wepy.getSystemInfo({
+      success: res => {
+        windowWidth = res.windowWidth
+      }
+    })
+    this.sliderLeft = (windowWidth / this.tabs.length - sliderWidth) / 2
+    this.sliderOffset = windowWidth / this.tabs.length * this.activeIndex
+    this.$apply()
+  }
+}
+</script>

@@ -1,0 +1,66 @@
+<style lang="less" scoped>
+.listblock {
+  .listblock-item {
+    width: 50%;
+    padding: 4rpx 4rpx 8rpx 4px;
+  }
+}
+</style>
+
+<template>
+  <view class="listblock">
+    <repeat for="{{list}}" item="item" index="index" key="index">
+        <card :info="item" class="listblock-item"/>
+      </repeat>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import Card from 'components/common/card'
+
+export default class ListBlock extends wepy.component {
+  components = {
+    card: Card
+  }
+  data = {
+    list: [
+      {
+        title: '1',
+        price: '$1',
+        url:
+          'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg',
+        imgStyle: 'height: 50vw'
+      },
+      {
+        title: '2',
+        price: '$2',
+        url:
+          'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg',
+        imgStyle: 'height: 50vw'
+      },
+      {
+        title: '3',
+        price: '$3',
+        url:
+          'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg',
+        imgStyle: 'height: 50vw'
+      },
+      {
+        title: '4',
+        price: '$4',
+        url:
+          'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg',
+        imgStyle: 'height: 50vw'
+      },
+      {
+        title: '5',
+        price: '$5',
+        url:
+          'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg',
+        imgStyle: 'height: 50vw'
+      }
+    ]
+  }
+}
+</script>

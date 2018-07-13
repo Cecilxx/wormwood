@@ -1,0 +1,50 @@
+<!--  -->
+<template>
+  <view @tap="click">
+    <view class="icon-box"><image class="icon" src='{{src}}' /></view>
+    <view class="text">{{ text }}</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Example extends wepy.component {
+  props = {
+    src: {
+      type: String
+    },
+    text: {
+      type: String
+    }
+  }
+  data = {}
+  components = {}
+  methods = {
+    click() {
+      this.$emit('click')
+    }
+  }
+  events = {}
+  watch = {}
+  computed = {}
+  onLoad() {}
+  onShow() {}
+}
+</script>
+
+<style lang='less' scoped>
+.icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: block;
+  margin: 0 auto;
+  // background-repeat: no-repeat;
+  // background-position: center center;
+  // background-size: cover;
+  // background-image: data-uri('../../images/share.png');
+}
+.text {
+  color: #999;
+  text-align: center;
+}
+</style>

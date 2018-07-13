@@ -1,0 +1,76 @@
+<style scoped lang="less">
+.swiper {
+  width: 100%;
+  .slide-image {
+    width: 100%;
+  }
+}
+</style>
+
+<template>
+  <swiper
+    style="{{style}}"
+    class="swiper"
+    autoplay="{{autoplay}}"
+    interval="{{interval}}"
+    duration="{{duration}}"
+    circular="{{circular}}"
+    indicatorDots="{{indicatorDots}}"
+    @tap="handClick"
+    >
+    <repeat for="{{imgUrls}}" item="item">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" mode="{{ mode }}" style="{{ imgStyle }}"/>
+      </swiper-item>
+    </repeat>
+  </swiper>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Swiper extends wepy.component {
+  props = {
+    imgUrls: {
+      type: Array,
+      default: []
+    },
+    indicatorDots: {
+      type: Boolean,
+      default: true
+    },
+    autoplay: {
+      type: Boolean,
+      default: true
+    },
+    circular: {
+      type: Boolean,
+      default: true
+    },
+    interval: {
+      type: Number,
+      default: 3000
+    },
+    duration: {
+      type: Number,
+      default: 500
+    },
+    style: {
+      type: String
+    },
+    imgStyle: {
+      type: String
+    },
+    mode: {
+      type: String
+    },
+    click: {
+      type: Function
+    }
+  }
+  methods = {
+    handClick() {
+      this.$emit('clickFn')
+    }
+  }
+}
+</script>

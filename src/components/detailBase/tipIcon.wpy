@@ -1,0 +1,33 @@
+<!--  -->
+<template>
+  <view class="tipicon">
+    <slot name="icon" />
+    <slot name="des" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Example extends wepy.component {
+  props = {
+    info: {
+      type: Object,
+      default: {}
+    }
+  }
+  data = {}
+  components = {}
+  methods = {}
+  events = {}
+  watch = {}
+  computed = {}
+  onLoad() {}
+  onShow() {}
+}
+</script>
+
+<style lang='less'>
+.tipicon {
+  display: inline-block;
+}
+</style>

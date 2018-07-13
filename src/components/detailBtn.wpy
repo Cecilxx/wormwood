@@ -1,0 +1,81 @@
+<style lang="less" scoped>
+.detail-btn {
+  background: #fff;
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  border-top: 1rpx solid rgba(0, 0, 0, 0.1);
+  .btn {
+    flex: 1;
+    background: rgb(241, 58, 58);
+    color: #fff;
+    height: 100rpx;
+    line-height: 100rpx;
+    &.left {
+      background: rgb(223, 111, 37);
+    }
+  }
+  .act-groups {
+    min-width: 250rpx;
+    display: flex;
+    color: #999;
+    .act {
+      flex: 1;
+      padding: 0 20rpx;
+    }
+  }
+}
+</style>
+
+<template>
+  <view class="detail-btn">
+    <view class="act-groups">
+      <homeIcon @click.user="clickHome" :src.sync="indexUrl" :text.sync="indexText" class="act" />
+      <loveIcon @click.user="clickLove" :src.sync="loveUrl" :text.sync="loveText" class="act" />
+    </view>
+    <view class="btn left">加入购物车</view>
+    <view class="btn">立即购买</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import ActIcon from 'components/common/actIcon'
+import { index, love1, love2 } from '@/utils/img'
+const loveText1 = '收藏'
+const loveText2 = '已收藏'
+const indexText = '首页'
+
+export default class DetailBtn extends wepy.component {
+  components = {
+    loveIcon: ActIcon,
+    homeIcon: ActIcon
+  }
+  data = {
+    indexText,
+    indexUrl: index,
+    loveText: loveText1,
+    loveUrl: love1
+  }
+  methods = {
+    clickHome() {
+      wepy.switchTab({
+        url: 'index'
+      })
+    },
+    clickLove() {
+      if (this.loveUrl === love1) {
+        this.loveUrl = love2
+        this.loveText = loveText2
+      } else {
+        this.loveUrl = love1
+        this.loveText = loveText1
+      }
+    }
+  }
+}
+</script>
