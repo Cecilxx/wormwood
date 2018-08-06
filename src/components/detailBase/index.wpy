@@ -2,14 +2,14 @@
 <template>
   <view class="detail-base">
     <view class="border-bottom">
-      <view class="detail-base-title">title</view>
+      <view class="detail-base-title">{{ info.title }}</view>
       <view class="detail-base-second">
-        <price class="left" />
+        <price class="left" :info.sync="info.priceInfo" />
         <share class="right" />
       </view>
     </view>
     <view class="icon-group">
-      <repeat for="{{tips}}" key="index" item="item">
+      <repeat for="{{info.tips}}" key="index" item="item">
         <tipIcon class="icon-item" :info="item">
           <icon type="success_no_circle" size="14" slot="icon" class="icon"/>
           <text slot="des" class="des">{{ item.text }}</text>
@@ -21,24 +21,18 @@
 
 <script>
 import wepy from 'wepy'
+import { connect } from 'wepy-redux'
 import TipIcon from './tipIcon'
 import Price from './price'
 import Share from './share'
+
+@connect({
+  info(state) {
+    return state.detail.initData.baseInfo
+  }
+})
 export default class Example extends wepy.component {
   props = {}
-  data = {
-    tips: [
-      {
-        text: '正品保障'
-      },
-      {
-        text: '极速发货'
-      },
-      {
-        text: '7天退货'
-      }
-    ]
-  }
   components = {
     tipIcon: TipIcon,
     price: Price,

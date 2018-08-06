@@ -16,7 +16,6 @@ export default handleActions(
       }
     },
     [ASYNC_INCREMENT](state, action) {
-      console.log('执行asyncinc reducer', action)
       return {
         ...state,
         asyncNum: state.asyncNum + action.payload

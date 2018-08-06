@@ -3,7 +3,7 @@
 
 <template>
   <view class="container">
-    this is car
+    {{ count }}
   </view>
 </template>
 
@@ -12,14 +12,8 @@ import wepy from 'wepy'
 import { connect } from 'wepy-redux'
 
 @connect({
-  num(state) {
-    return state.counter.num
-  },
-  asyncNum(state) {
-    return state.counter.asyncNum
-  },
-  sumNum(state) {
-    return state.counter.num + state.counter.asyncNum
+  count(state) {
+    return state.detail.count
   }
 })
 export default class Index extends wepy.page {

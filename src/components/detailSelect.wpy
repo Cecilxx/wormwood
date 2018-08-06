@@ -1,11 +1,178 @@
-<style lang="less" scoped>
-</style>
-
+<!--  -->
 <template>
-  <view>
-    this is detailSelect
-  </view>
+  <popup bottom="100">
+    <view slot="head" class="select-head">
+      <view class="content">
+        <image class="img" src="{{headImg}}" mode="scaleToFill"
+          lazy-load="true" />
+        <view class="info">
+          <view class="price">{{ selectInfo.price }}</view>
+          <view class="stock">库存{{ selectInfo.stock }}件</view>
+        </view>
+      </view>
+      <image class="close" @tap="close" src="../images/close.png" />
+    </view>
+    <view slot="body" class="select-body">
+      <view class="specification">
+        <view class="title">规格</view>
+        <view class="btn"><button type="warn">{{ selectInfo.specification.text }}</button></view>
+      </view>
+      <view class="count">
+        <view class="title">数量</view>
+        <view class="group">
+          <text class="item decrement" @tap="decrement">-</text>
+          <input class="item total" value="{{ count }}" type="number" bindinput="handleInput" bindblur="handleBlur"/>
+          <text class="item increase" @tap="increase">+</text>
+        </view>
+      </view>
+    </view>
+  </popup>
 </template>
 
 <script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import {
+  SHOWSELECT,
+  DECREMENT,
+  INCREASE,
+  INPUTCHANGE,
+  INPUTBLUR
+} from 'store/types/detail'
+import Popup from 'components/common/popup'
+
+@connect(
+  {
+    selectInfo(state) {
+      return state.detail.initData.selectInfo
+    },
+    count(state) {
+      return state.detail.count
+    }
+  },
+  {
+    showSelectAct: SHOWSELECT,
+    decrement: DECREMENT,
+    increase: INCREASE,
+    onInput: INPUTCHANGE,
+    onBlur: INPUTBLUR
+  }
+)
+export default class Example extends wepy.component {
+  props = {}
+
+  data = {
+    headImg:
+      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+    total: 1
+  }
+
+  components = {
+    popup: Popup
+  }
+
+  methods = {
+    close() {
+      this.methods.showSelectAct(false)
+    },
+    handleInput(e) {
+      this.methods.onInput(e.detail.value)
+    },
+    handleBlur(e) {
+      this.methods.onBlur(e.detail.value)
+    },
+    handleBlur(e) {
+      this.methods.onBlur(e.detail.value)
+    }
+  }
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  onLoad() {}
+
+  onShow() {}
+}
 </script>
+
+<style lang='less' scoped>
+.select-head {
+  display: flex;
+  align-items: center;
+  position: relative;
+  .content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    .img {
+      height: 150rpx;
+      width: 150rpx;
+    }
+    .info {
+      flex: 1;
+      margin-left: 20rpx;
+      .price {
+        color: red;
+        font-size: 28rpx;
+        font-weight: bold;
+      }
+      .stock {
+        color: #999;
+      }
+    }
+  }
+  .close {
+    height: 48rpx;
+    width: 48rpx;
+  }
+}
+.select-body {
+  font-size: 28rpx;
+  .specification {
+    border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 20rpx;
+  }
+  .count {
+    padding: 20rpx 0rpx;
+    display: flex;
+    align-items: center;
+    .title {
+      flex: 1;
+      padding: 0;
+    }
+    .group {
+      text-align: center;
+      box-sizing: border-box;
+      display: flex;
+      .item {
+        background: #eee;
+        height: 1.4rem;
+        line-height: 1.4rem;
+        padding: 10rpx;
+      }
+      .increase {
+        width: 1.4rem;
+      }
+      .total {
+        margin: 0 4rpx;
+        width: 120rpx;
+      }
+      .decrement {
+        width: 1.4rem;
+      }
+    }
+  }
+  .btn {
+    width: 120rpx;
+    button {
+      font-size: 24rpx;
+    }
+  }
+  .title {
+    padding-bottom: 20rpx;
+  }
+}
+</style>

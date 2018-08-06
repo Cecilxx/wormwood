@@ -1,14 +1,24 @@
 <!--  -->
 <template>
   <view>
-    <text class="current">￥42</text>
-    <text class="origin">￥92</text>
-    <text class="count">销量：8424件</text>
+    <text class="current">{{ info.currentPrice }}</text>
+    <text class="origin">{{ info.originalPrice }}</text>
+    <text class="count">销量：{{ info.salesVolume }}</text>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+
+@connect({
+  showSelect(state) {
+    return state.detail.showSelect
+  },
+  info(state) {
+    return state.detail.initData.baseInfo.priceInfo
+  }
+})
 export default class Example extends wepy.component {
   props = {}
   data = {}
@@ -17,7 +27,9 @@ export default class Example extends wepy.component {
   events = {}
   watch = {}
   computed = {}
-  onLoad() {}
+  onLoad() {
+    console.log('3', this.info)
+  }
   onShow() {}
 }
 </script>

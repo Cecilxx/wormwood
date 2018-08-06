@@ -3,12 +3,10 @@
   background: #fff;
   text-align: center;
   width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   border-top: 1rpx solid rgba(0, 0, 0, 0.1);
+  height: 100rpx;
   .btn {
     flex: 1;
     background: rgb(241, 58, 58);
@@ -26,6 +24,11 @@
     .act {
       flex: 1;
       padding: 0 20rpx;
+      border-right: 1rpx solid rgba(0, 0, 0, 0.1);
+
+      &:nth-last-child(1) {
+        border: 0;
+      }
     }
   }
 }
@@ -37,19 +40,36 @@
       <homeIcon @click.user="clickHome" :src.sync="indexUrl" :text.sync="indexText" class="act" />
       <loveIcon @click.user="clickLove" :src.sync="loveUrl" :text.sync="loveText" class="act" />
     </view>
-    <view class="btn left">加入购物车</view>
-    <view class="btn">立即购买</view>
+    <view class="btn left" @tap="clickCar">加入购物车</view>
+    <view class="btn" @tap="clickBuy">立即购买</view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
+import { connect } from 'wepy-redux'
 import ActIcon from 'components/common/actIcon'
 import { index, love1, love2 } from '@/utils/img'
+import { SHOWSELECT } from 'store/types/detail'
+
 const loveText1 = '收藏'
 const loveText2 = '已收藏'
 const indexText = '首页'
 
+@connect(
+  {
+    showSelect(state) {
+      return state.detail.showSelect
+    },
+    count(state) {
+      return state.detail.count
+    },
+    pid(state) {
+      return state.detail.initData.pid
+    }
+  },
+  { showSelectAct: SHOWSELECT }
+)
 export default class DetailBtn extends wepy.component {
   components = {
     loveIcon: ActIcon,
@@ -74,6 +94,23 @@ export default class DetailBtn extends wepy.component {
       } else {
         this.loveUrl = love1
         this.loveText = loveText1
+      }
+    },
+    clickBuy() {
+      if (this.showSelect) {
+        console.log('立即购买: ' + this.count + '件', 'pid: ' + this.pid)
+      } else {
+        this.methods.showSelectAct(true)
+      }
+    },
+    clickCar() {
+      if (this.showSelect) {
+        console.log('加入购物车: ' + this.count + '件', 'pid: ' + this.pid)
+        wepy.showToast({
+          title: '加入成功'
+        })
+      } else {
+        this.methods.showSelectAct(true)
       }
     }
   }

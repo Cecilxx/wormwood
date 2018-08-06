@@ -47,7 +47,7 @@
         }
       }
       .weui-tab__content {
-        padding: 20rpx 20rpx 100rpx 20rpx;
+        padding: 20rpx;
       }
     }
   }
@@ -69,7 +69,7 @@
             <introduction />
           </view>
           <view class="weui-tab__content" hidden="{{activeIndex !== 1}}">
-            <preview />
+            <evaluation />
           </view>
         </view>
       </view>
@@ -79,14 +79,15 @@
 
 <script>
 import wepy from 'wepy'
+
 import Introduction from './introduction'
-import Preview from './preview'
+import Evaluation from './evaluation'
 
 const sliderWidth = 72 // 需要设置slider的宽度，用于计算中间位置
 export default class NavBar extends wepy.component {
   components = {
     introduction: Introduction,
-    preview: Preview
+    evaluation: Evaluation
   }
   data = {
     tabs: ['商品介绍', '评价'],

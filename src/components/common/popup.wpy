@@ -1,0 +1,109 @@
+<!--  -->
+<template>
+  <view class="lx-popup-container">
+    <view class="lx-popup-mask" style="bottom: {{bottom}}rpx"></view>
+    <view class="lx-popup-wrap" style="bottom: {{bottom}}rpx">
+      <view class="lx-popup lx-popup-slide-up">
+        <view class="lx-popup-content">
+          <view class="lx-popup-head">
+            <slot name="head"/>
+          </view>
+          <view class="lx-popup-body">
+            <slot name="body"/>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Example extends wepy.component {
+  props = {
+    bottom: {
+      type: String,
+      default: '0'
+    }
+  }
+
+  data = {
+    isShow: true
+  }
+
+  components = {}
+
+  methods = {}
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  onLoad() {
+    console.log('popup onload', this)
+  }
+
+  onShow() {
+    console.log('popup onshow', this)
+  }
+
+  onUnload() {
+    console.log('popup unload', this)
+  }
+}
+</script>
+
+<style lang='less'>
+.lx-popup-container {
+  .lx-popup-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    // bottom: 0;
+    // height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .lx-popup-wrap {
+    position: fixed;
+    overflow: auto;
+    top: 0;
+    right: 0;
+    // bottom: 0;
+    left: 0;
+    // height: 100%;
+    outline: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateZ(1px);
+
+    .lx-popup {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      bottom: 0;
+
+      .lx-popup-content {
+        position: relative;
+        background-color: #fff;
+        border: 0;
+        background-clip: padding-box;
+        height: 100%;
+        overflow: hidden;
+
+        .lx-popup-head {
+          padding: 20rpx;
+          border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+        }
+        .lx-popup-body {
+          padding: 20rpx;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+}
+</style>

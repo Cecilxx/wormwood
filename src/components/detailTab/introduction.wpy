@@ -1,23 +1,18 @@
 <!--  -->
 <template>
   <view>
-    <view>introduction</view>
-    <view>introduction</view>
-    <view>introduction</view>
-    <view>introduction</view>
-    <view>introduction</view>
-    <view>introduction</view>
-    <view>introduction</view>
-    <view>introduction</view>
-    <view>introduction</view>
-    <view>introduction</view>
-    <view>introduction</view>
-    <view>introduction</view>
+    {{ tabInfo.introduction }}
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+@connect({
+  tabInfo(state) {
+    return state.detail.initData.tabInfo
+  }
+})
 export default class Example extends wepy.component {
   props = {}
 
