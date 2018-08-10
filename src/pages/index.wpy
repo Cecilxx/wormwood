@@ -7,11 +7,8 @@
 <template>
   <view class="container">
     <view class="block-wrp">
-      <swiper :imgUrls.sync="imgUrls" />
+      <swiper :imgUrls.sync="imgUrls" @clickFn.user="lookImgs"/>
     </view>
-    <!-- <view class="block-wrp">
-      <welfare />
-    </view> -->
     <view class="block-wrp">
       <homeBlock />
     </view>
@@ -20,32 +17,10 @@
 
 <script>
 import wepy from 'wepy'
-import { connect } from 'wepy-redux'
 import Swiper from 'components/common/swiper'
 import Welfare from 'components/welfare'
 import HomeBlock from 'components/homeBlock/index'
 
-import { INCREMENT, DECREMENT } from 'store/types/counter'
-import { asyncInc } from 'store/actions'
-
-@connect(
-  {
-    num(state) {
-      return state.counter.num
-    },
-    asyncNum(state) {
-      return state.counter.asyncNum
-    },
-    sumNum(state) {
-      return state.counter.num + state.counter.asyncNum
-    }
-  },
-  {
-    INCREMENT,
-    DECREMENT,
-    asyncInc
-  }
-)
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: 'index'
@@ -61,11 +36,9 @@ export default class Index extends wepy.page {
   }
   computed = {}
   methods = {
-    async click() {
-      await this.methods.asyncInc()
-      wepy.setTabBarBadge({
-        index: 1,
-        text: `${this.sumNum}`
+    lookImgs() {
+      wepy.previewImage({
+        urls: this.imgUrls
       })
     }
   }

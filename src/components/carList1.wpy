@@ -1,0 +1,174 @@
+<style lang="less" scoped>
+.touch-item {
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+  overflow: hidden;
+}
+.content {
+  display: flex;
+  padding: 20rpx;
+  line-height: 40rpx;
+  margin-right: 0;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  -webkit-transform: translateX(180rpx);
+  transform: translateX(180rpx);
+  margin-left: -180rpx;
+  .detail {
+    display: flex;
+    .img {
+      height: 120rpx;
+      width: 120rpx;
+    }
+  }
+}
+.del {
+  background-color: orangered;
+  width: 180rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  -webkit-transform: translateX(180rpx);
+  transform: translateX(180rpx);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+.touch-move-active .content,
+.touch-move-active .del {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+</style>
+
+<template>
+  <view class="asdasdads">
+    <repeat for="{{list}}" item="item" key="index" index="index">
+      <view @touchstart="touchstart" @touchmove="touchmove({{index}})" class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}">
+        <view class="content">
+          <checkbox class="radio" checked="{{checked}}">选中</checkbox>
+          <view class="detail">
+            <image class="img" src="{{item.imgUrl}}" mode="scaleToFill" lazy-load="true" />
+            <view>{{ item.title }}</view>
+          </view>
+        </view>
+        <view class="del" @tap="del({{index}})">删除</view>
+      </view>
+    </repeat>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import { CAR_UPDATE } from 'store/types/car'
+
+@connect(
+  {
+    list(state) {
+      return state.car.list
+    },
+    startX(state) {
+      return state.car.startX
+    },
+    startY(state) {
+      return state.car.startY
+    }
+  },
+  {
+    carUpdate: CAR_UPDATE
+  }
+)
+export default class CarList extends wepy.component {
+  data = {
+    checked: true
+  }
+  computed = {}
+  methods = {
+    // 手指触摸动作开始 记录起点X坐标
+    touchstart(e) {
+      // 开始触摸时 重置所有删除
+      const items = [...this.list]
+      const startX = e.changedTouches[0].clientX
+      const startY = e.changedTouches[0].clientY
+      items.forEach(function(v, i) {
+        if (v.isTouchMove) {
+          // 只操作为true的
+          v.isTouchMove = false
+        }
+      })
+      this.methods.carUpdate({
+        list: items,
+        startX,
+        startY
+      })
+    },
+    // 滑动事件处理
+    touchmove(index, e) {
+      // const index = e.currentTarget.dataset.index // 当前索引
+      const startX = this.startX // 开始X坐标
+      const startY = this.startY // 开始Y坐标
+      const touchMoveX = e.changedTouches[0].clientX // 滑动变化坐标
+      const touchMoveY = e.changedTouches[0].clientY // 滑动变化坐标
+      const items = [...this.list]
+      // 获取滑动角度
+      const angle = this.angle(
+        { X: startX, Y: startY },
+        { X: touchMoveX, Y: touchMoveY }
+      )
+      items.forEach(function(v, i) {
+        v.isTouchMove = false
+        // 滑动超过30度角 return
+        if (Math.abs(angle) > 30) return
+        if (i === index) {
+          if (touchMoveX > startX) {
+            // 右滑
+            v.isTouchMove = false // 左滑
+          } else {
+            v.isTouchMove = true
+          }
+        }
+      })
+      // 更新数据
+      this.methods.carUpdate({
+        list: items,
+        startX,
+        startY
+      })
+    },
+    // 删除事件
+    del: function(index) {
+      const items = [...this.list]
+      items.splice(index, 1)
+      this.methods.carUpdate({
+        list: items,
+        startX: this.startX,
+        startY: this.startY
+      })
+    }
+  }
+
+  /**
+   * 计算滑动角度
+   * @param {Object} start 起点坐标
+   * @param {Object} end 终点坐标
+   */
+  angle(start, end) {
+    const _X = end.X - start.X
+    const _Y = end.Y - start.Y
+    // 返回角度 /Math.atan()返回数字的反正切值
+    return 360 * Math.atan(_Y / _X) / (2 * Math.PI)
+  }
+  events = {}
+  onLoad() {
+    console.log('carList onLoad')
+  }
+  onShow() {
+    console.log('carList onshow')
+  }
+}
+</script>

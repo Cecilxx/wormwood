@@ -42,15 +42,15 @@ export default class Example extends wepy.component {
   computed = {}
 
   onLoad() {
-    console.log('popup onload', this)
+    console.log('popup onload')
   }
 
   onShow() {
-    console.log('popup onshow', this)
+    console.log('popup onshow')
   }
 
   onUnload() {
-    console.log('popup unload', this)
+    console.log('popup unload')
   }
 }
 </script>

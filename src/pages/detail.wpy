@@ -41,6 +41,7 @@ import DetailBtn from 'components/detailBtn'
 import DetailSelect from 'components/detailSelect'
 import { asyncDetailInit } from 'store/actions/detail'
 import { DETAIL_DEFAULT } from 'store/types/detail'
+
 @connect(
   {
     showSelect(state) {
@@ -52,7 +53,7 @@ import { DETAIL_DEFAULT } from 'store/types/detail'
   },
   {
     asyncDetailInit,
-    defaultDefault: DETAIL_DEFAULT
+    defaultDetail: DETAIL_DEFAULT
   }
 )
 export default class Index extends wepy.page {
@@ -87,6 +88,7 @@ export default class Index extends wepy.page {
   }
   events = {}
   onLoad() {
+    console.log('detail onUnload', 'defaultDefault')
     this.methods.asyncDetailInit()
   }
   onShow() {
@@ -94,7 +96,7 @@ export default class Index extends wepy.page {
   }
   onUnload() {
     console.log('detail onUnload', 'defaultDefault')
-    // this.methods.defaultDefault()
+    this.methods.defaultDetail()
   }
   onHide() {
     console.log('detail onHide')

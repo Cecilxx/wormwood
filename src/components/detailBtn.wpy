@@ -40,8 +40,8 @@
       <homeIcon @click.user="clickHome" :src.sync="indexUrl" :text.sync="indexText" class="act" />
       <loveIcon @click.user="clickLove" :src.sync="loveUrl" :text.sync="loveText" class="act" />
     </view>
-    <view class="btn left" @tap="clickCar">加入购物车</view>
-    <view class="btn" @tap="clickBuy">立即购买</view>
+    <view class="btn left" @tap="clickCar">结算</view>
+    <view class="btn" @tap="clickBuy">删除</view>
   </view>
 </template>
 
@@ -99,6 +99,7 @@ export default class DetailBtn extends wepy.component {
     clickBuy() {
       if (this.showSelect) {
         console.log('立即购买: ' + this.count + '件', 'pid: ' + this.pid)
+        this.methods.showSelectAct(false)
       } else {
         this.methods.showSelectAct(true)
       }
@@ -109,6 +110,7 @@ export default class DetailBtn extends wepy.component {
         wepy.showToast({
           title: '加入成功'
         })
+        this.methods.showSelectAct(false)
       } else {
         this.methods.showSelectAct(true)
       }

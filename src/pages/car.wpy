@@ -1,42 +1,75 @@
-<style lang="less">
-</style>
-
+<!--  -->
 <template>
-  <view class="container">
-    {{ count }}
+  <view class='container'>
+    <carList />
+    <view class="car-btn-wrap">
+      <carBtn />
+    </view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
 import { connect } from 'wepy-redux'
+import { asyncCarInit } from 'store/actions/car'
+import CarList from 'components/carList'
+import CarBtn from 'components/carBtn'
 
-@connect({
-  count(state) {
-    return state.detail.count
+@connect(
+  {},
+  {
+    asyncCarInit
   }
-})
-export default class Index extends wepy.page {
+)
+export default class Example extends wepy.page {
   config = {
     navigationBarTitleText: 'car'
   }
-  components = {}
-  mixins = []
-  data = {}
-  computed = {}
-  methods = {}
-  events = {}
-  onLoad() {
-    // wepy.setTabBarBadge({
-    //   index: 1,
-    //   text: `${this.sumNum}`
-    // })
+
+  data = {
+    firstInit: false
   }
+
+  components = {
+    carList: CarList,
+    carBtn: CarBtn
+  }
+
+  methods = {}
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  async onLoad() {
+    this.firstInit = true
+    await this.methods.asyncCarInit()
+    this.firstInit = false
+  }
+
   onShow() {
-    // wepy.setTabBarBadge({
-    //   index: 1,
-    //   text: `${this.sumNum}`
-    // })
+    if (!this.firstInit) {
+      this.methods.asyncCarInit()
+    }
+    console.log('car onShow')
+  }
+
+  onUnLoad() {
+    console.log('car onUnLoad')
   }
 }
 </script>
+
+<style lang='less' scoped>
+.container {
+  border-top: 1rpx solid rgba(0, 0, 0, 0.1);
+  .car-btn-wrap {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+</style>

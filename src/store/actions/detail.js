@@ -1,6 +1,6 @@
 import { DETAIL_INIT } from '../types/detail'
 import { createAction } from 'redux-actions'
-console.log(DETAIL_INIT, 1)
+
 export const asyncDetailInit = createAction(DETAIL_INIT, () => {
   console.log(DETAIL_INIT, 2)
   return new Promise(resolve => {
@@ -13,9 +13,10 @@ export const asyncDetailInit = createAction(DETAIL_INIT, () => {
         ],
         baseInfo: {
           priceInfo: {
-            originalPrice: '￥1000',
-            currentPrice: '￥500',
-            salesVolume: '8723'
+            originalPrice: 1000,
+            currentPrice: 500,
+            salesVolume: 8723,
+            currency: '￥'
           },
           title: '爱买不买',
           tips: [
@@ -35,14 +36,15 @@ export const asyncDetailInit = createAction(DETAIL_INIT, () => {
           evaluation: '好评'
         },
         selectInfo: {
-          price: '￥500',
-          stock: '10000',
+          price: 500,
+          stock: 10000,
+          currency: '￥',
           specification: {
-            id: '1',
+            id: 1,
             text: '默认'
           }
         },
-        pid: '123321'
+        pid: 123321
       })
     }, 1000)
   })

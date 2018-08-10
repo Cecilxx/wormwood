@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import counter from './counter'
+import car from './car'
 import detail from './detail'
 
 export default combineReducers({
-  counter,
+  car,
   detail
 })

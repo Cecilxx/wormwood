@@ -22,7 +22,7 @@
     <title class="block-item-title" />
     <view class="block-item-card">
       <repeat for="{{list}}" item="item" index="index" key="index">
-        <card :info="item" class="card-item"/>
+        <listCard :info="item" class="card-item"/>
       </repeat>
     </view>
   </view>
@@ -31,12 +31,12 @@
 <script>
 import wepy from 'wepy'
 import Title from './title'
-import Card from 'components/common/card'
+import ListCard from 'components/common/listCard'
 
 export default class BlockItem extends wepy.component {
   components = {
     title: Title,
-    card: Card
+    listCard: ListCard
   }
   data = {
     list: [

@@ -1,0 +1,66 @@
+<style lang="less" scoped>
+.price-card {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  .img {
+    width: 140rpx;
+    height: 140rpx;
+    max-height: 180px;
+    margin-right: 20rpx;
+  }
+  .contanier {
+    flex: 1;
+    .title {
+      font-size: 28rpx;
+      margin-bottom: 10rpx;
+    }
+    .specification {
+      margin-bottom: 10rpx;
+      color: #999;
+    }
+    .pricecount {
+      display: flex;
+      .price {
+        flex: 1;
+        color: red;
+      }
+      .count {
+      }
+    }
+  }
+}
+</style>
+
+<template>
+  <view class="price-card" @tap="click">
+    <image src="{{info.imgUrl}}" class="img" lazy-load="true" />
+    <view class="contanier">
+      <view class="title">{{ info.title }}</view>
+      <view class="specification">规格：{{ info.specification.text }}</view>
+      <view class="pricecount">
+        <text class="price">{{ info.currency }}{{ info.price }}</text>
+        <text class="count">x{{ info.count }}</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class PriceCard extends wepy.component {
+  props = {
+    info: {
+      type: Object,
+      default: {}
+    }
+  }
+  data = {}
+  computed = {}
+  methods = {
+    click() {
+      this.$emit('click')
+    }
+  }
+}
+</script>

@@ -1,5 +1,5 @@
 <style lang="less" scoped>
-.card {
+.list-card {
   display: inline-block;
   box-sizing: border-box;
   width: 100%;
@@ -15,7 +15,7 @@
 </style>
 
 <template>
-  <view class="card" @tap="click">
+  <view class="list-card" @tap="click">
     <image src="{{info.url}}" class="img" style="{{ info.imgStyle }}"/>
     <view class="title">{{ info.title }}</view>
     <view class="price">{{ info.price }}</view>

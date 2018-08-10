@@ -10,18 +10,18 @@
 <template>
   <view class="listblock">
     <repeat for="{{list}}" item="item" index="index" key="index">
-        <card :info="item" class="listblock-item"/>
-      </repeat>
+      <listCard :info="item" class="listblock-item"/>
+    </repeat>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-import Card from 'components/common/card'
+import ListCard from 'components/common/listCard'
 
 export default class ListBlock extends wepy.component {
   components = {
-    card: Card
+    listCard: ListCard
   }
   data = {
     list: [

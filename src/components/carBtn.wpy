@@ -1,0 +1,162 @@
+<style lang="less" scoped>
+.car-btn-wrap {
+  background: #fff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-top: 1rpx solid rgba(0, 0, 0, 0.1);
+  height: 100rpx;
+  .checkbox-calc {
+    line-height: 100rpx;
+    flex: 2;
+    display: flex;
+    padding-left: 20rpx;
+    .totalprice {
+      flex: 1;
+      text-align: right;
+      padding-right: 20rpx;
+      .price-info {
+        color: red;
+      }
+    }
+  }
+  .btn-item {
+    flex: 1;
+    background: rgb(241, 58, 58);
+    color: #fff;
+    height: 100rpx;
+    line-height: 100rpx;
+    text-align: center;
+    &.left {
+      background: rgb(223, 111, 37);
+    }
+  }
+  &-checkedall {
+    min-width: 250rpx;
+    display: flex;
+    color: #999;
+    flex: 2;
+  }
+}
+</style>
+
+<template>
+  <view class="car-btn-wrap">
+    <view class="checkbox-calc">
+      <view><checkbox @tap="onCheckedAll" checked="{{listCheckedAll}}" disabled="{{checkboxDisabled}}">全选</checkbox></view>
+      <view class="totalprice">总计：<text class="price-info">￥{{totalPrice}}</text></view>
+    </view>
+    <view class="btn-item left" @tap="calculate">结算</view>
+    <view class="btn-item" @tap="dele">删除</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import {
+  CAR_LIST_IS_SELECTED_ALL,
+  CAR_SELECTED_CID,
+  CAR_DEFAULT_IS_SELECTED_ALL,
+  CAR_CALC_TOTAL_PRICE,
+  CAR_INIT
+} from 'store/types/car'
+@connect(
+  {
+    listCheckedAll(state) {
+      return state.car.listCheckedAll
+    },
+    listDefaultCheckedAll(state) {
+      return state.car.listDefaultCheckedAll
+    },
+    list(state) {
+      return state.car.list
+    },
+    selectedCids(state) {
+      return state.car.selectedCids
+    },
+    totalPrice(state) {
+      return state.car.totalPrice
+    }
+  },
+  {
+    listCheckedAllFn: CAR_LIST_IS_SELECTED_ALL,
+    listDefaultCheckedAllFn: CAR_DEFAULT_IS_SELECTED_ALL,
+    selectedCidFn: CAR_SELECTED_CID,
+    calcTotalPriceFn: CAR_CALC_TOTAL_PRICE,
+    updateList: CAR_INIT
+  }
+)
+export default class DetailBtn extends wepy.component {
+  components = {}
+  data = {}
+  methods = {
+    onCheckedAll() {
+      if (this.listCheckedAll) {
+        // 处于全选状态下点击
+        this.methods.listCheckedAllFn(false)
+        this.methods.listDefaultCheckedAllFn(false)
+        this.methods.selectedCidFn([])
+        this.methods.calcTotalPriceFn(0)
+      } else {
+        // 处于未全选状态下点击
+        let totalPrice = 0
+        const cids = this.list.map(e => {
+          totalPrice += e.price * e.count
+          return e.cid
+        })
+        this.methods.listDefaultCheckedAllFn(false)
+        this.methods.listCheckedAllFn(true)
+        this.methods.listDefaultCheckedAllFn(true)
+        this.methods.selectedCidFn(cids)
+        this.methods.calcTotalPriceFn(totalPrice)
+      }
+    },
+    calculate() {
+      if (this.selectedCids.length === 0) {
+        return this.showBtnToast()
+      }
+    },
+    dele() {
+      const cids = this.selectedCids
+      const list = [...this.list]
+      const remaining = []
+
+      if (cids.length === 0) {
+        return this.showBtnToast()
+      }
+
+      wepy.showModal({
+        content: `确认将这${cids.length}个宝贝删除？`, // 提示的内容,
+        success: res => {
+          if (res.confirm) {
+            list.forEach(e => {
+              if (!cids.includes(e.cid)) {
+                remaining.push(e)
+              }
+            })
+
+            this.methods.updateList(remaining)
+            this.methods.selectedCidFn([])
+            this.methods.calcTotalPriceFn(0)
+            this.methods.listDefaultCheckedAllFn(true)
+            this.methods.listDefaultCheckedAllFn(false)
+            this.methods.listCheckedAllFn(false)
+          }
+        }
+      })
+    }
+  }
+  showBtnToast() {
+    wepy.showToast({
+      title: '您还没有选择宝贝哦', // 提示的内容,
+      icon: 'none' // 图标
+    })
+  }
+  computed = {
+    checkboxDisabled() {
+      return !(this.list && this.list.length)
+    }
+  }
+}
+</script>

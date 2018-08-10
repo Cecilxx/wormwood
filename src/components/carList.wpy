@@ -1,0 +1,99 @@
+<style lang="less" scoped>
+.car-list {
+  &-item {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10rpx;
+    padding: 20rpx;
+    &:nth-last-child(1) {
+      margin-bottom: 0;
+    }
+  }
+}
+</style>
+
+<template>
+  <view class="car-list">
+    <checkbox-group @change="checkboxChange">
+      <repeat for="{{list}}" item="item" key="index" index="index">
+        <view class="car-list-item">
+          <checkbox class="checkbox" value="{{item.cid}}" checked="{{listDefaultCheckedAll}}" key="{{index}}" />
+          <priceCard :info="item" />
+        </view>
+      </repeat>
+    </checkbox-group>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import PriceCard from 'components/common/priceCard'
+import {
+  CAR_LIST_IS_SELECTED_ALL,
+  CAR_DEFAULT_IS_SELECTED_ALL,
+  CAR_SELECTED_CID,
+  CAR_CALC_TOTAL_PRICE
+} from 'store/types/car'
+@connect(
+  {
+    list(state) {
+      return state.car.list
+    },
+    listDefaultCheckedAll(state) {
+      return state.car.listDefaultCheckedAll
+    },
+    selectedCids(state) {
+      return state.car.selectedCids
+    }
+  },
+  {
+    listCheckedAll: CAR_LIST_IS_SELECTED_ALL,
+    selectedCid: CAR_SELECTED_CID,
+    listDefaultCheckedAll: CAR_DEFAULT_IS_SELECTED_ALL,
+    calcTotalPrice: CAR_CALC_TOTAL_PRICE
+  }
+)
+export default class CarList extends wepy.component {
+  data = {
+    isSelected: false
+  }
+  components = {
+    priceCard: PriceCard
+  }
+  methods = {
+    checkboxChange(e) {
+      const list = this.list
+      const cids = e.detail.value
+      const listCheckedLength = e.detail.value.length
+      const listLength = list.length
+      let totalPrice = 0
+      if (listCheckedLength === 0) {
+        this.methods.listDefaultCheckedAll(false)
+      }
+      if (listCheckedLength === listLength) {
+        this.methods.listDefaultCheckedAll(true)
+      }
+      this.methods.listCheckedAll(listCheckedLength === listLength)
+      this.methods.selectedCid(cids)
+
+      // 计算总价
+      list.forEach(e => {
+        if (cids.includes(e.cid)) {
+          totalPrice += e.price * e.count
+        }
+      })
+
+      this.methods.calcTotalPrice(totalPrice)
+    }
+  }
+  events = {}
+  onLoad() {
+    console.log('carList onLoad')
+  }
+  onShow() {
+    console.log('carList onshow')
+  }
+}
+</script>

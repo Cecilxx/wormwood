@@ -60,11 +60,5 @@ export default handleActions(
       return { ...init }
     }
   },
-  {
-    showSelect: false,
-    count: 1,
-    initData: {
-      baseInfo: { tips: [] }
-    }
-  }
+  init
 )
