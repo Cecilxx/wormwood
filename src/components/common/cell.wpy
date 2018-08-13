@@ -1,0 +1,76 @@
+<!--  -->
+<template>
+  <view class='cell' @tap="click" style="margin-bottom: {{bottom}}rpx">
+    <view class="cell-content">
+      <slot />
+    </view>
+    <view class="cell-extra">
+      <view wx:if="{{ extraTxt }}" class="cell-extra__text">{{ extraTxt }}</view>
+      <view wx:if="{{ showIcon }}" class="cell-extra__icon">></view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Example extends wepy.component {
+  props = {
+    showIcon: {
+      type: Boolean,
+      default: true
+    },
+    extraTxt: {
+      type: String,
+      default: ''
+    },
+    bottom: {
+      type: Number,
+      default: 0
+    }
+  }
+
+  data = {}
+
+  components = {}
+
+  methods = {
+    click() {
+      this.$emit('click')
+    }
+  }
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  onLoad() {
+    console.log(this.bottom)
+    console.log(this.showIcon)
+  }
+
+  onShow() {}
+}
+</script>
+
+<style lang='less' scoped>
+.cell {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 20rpx;
+  font-size: 28rpx;
+  &-content {
+    flex: 1;
+  }
+  &-extra {
+    display: flex;
+    align-items: center;
+
+    &__icon {
+      margin-left: 10rpx;
+    }
+  }
+}
+</style>

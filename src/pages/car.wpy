@@ -2,9 +2,7 @@
 <template>
   <view class='container'>
     <carList />
-    <view class="car-btn-wrap">
-      <carBtn />
-    </view>
+    <carBtn />
   </view>
 </template>
 
@@ -14,7 +12,6 @@ import { connect } from 'wepy-redux'
 import { asyncCarInit } from 'store/actions/car'
 import CarList from 'components/carList'
 import CarBtn from 'components/carBtn'
-
 @connect(
   {},
   {
@@ -25,37 +22,28 @@ export default class Example extends wepy.page {
   config = {
     navigationBarTitleText: 'car'
   }
-
   data = {
     firstInit: false
   }
-
   components = {
     carList: CarList,
     carBtn: CarBtn
   }
-
   methods = {}
-
   events = {}
-
   watch = {}
-
   computed = {}
-
   async onLoad() {
     this.firstInit = true
     await this.methods.asyncCarInit()
     this.firstInit = false
   }
-
   onShow() {
     if (!this.firstInit) {
       this.methods.asyncCarInit()
     }
     console.log('car onShow')
   }
-
   onUnLoad() {
     console.log('car onUnLoad')
   }
@@ -64,12 +52,6 @@ export default class Example extends wepy.page {
 
 <style lang='less' scoped>
 .container {
-  border-top: 1rpx solid rgba(0, 0, 0, 0.1);
-  .car-btn-wrap {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-  }
+  margin-top: 1rpx;
 }
 </style>

@@ -46,7 +46,8 @@ export default class extends wepy.app {
       'pages/mine',
       'pages/car',
       'pages/list',
-      'pages/detail'
+      'pages/detail',
+      'pages/book'
     ],
     window: {
       backgroundTextStyle: 'light',

@@ -1,0 +1,55 @@
+<style lang="less" scoped>
+.book-btn-wrap {
+  background: #fff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-top: 1rpx solid rgba(0, 0, 0, 0.1);
+  height: 100rpx;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  .totalprice {
+    flex: 3;
+    padding: 0 20rpx;
+    .price-info {
+      color: red;
+    }
+  }
+  .btn {
+    background: rgb(241, 58, 58);
+    color: #fff;
+    height: 100rpx;
+    line-height: 100rpx;
+    text-align: center;
+    padding: 0 40rpx;
+    flex: 1;
+  }
+}
+</style>
+
+<template>
+  <view class="book-btn-wrap">
+    <view class="totalprice">总计：<text class="price-info">￥{{totalPrice}}</text></view>
+    <view class="btn" @tap="submit">提交</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+// import { connect } from 'wepy-redux'
+
+export default class BookBtn extends wepy.component {
+  components = {}
+  data = {}
+  methods = {}
+  showBtnToast() {
+    wepy.showToast({
+      title: '请先选中收货地址', // 提示的内容,
+      icon: 'none' // 图标
+    })
+  }
+  computed = {}
+}
+</script>

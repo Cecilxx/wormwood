@@ -6,6 +6,10 @@
   align-items: center;
   border-top: 1rpx solid rgba(0, 0, 0, 0.1);
   height: 100rpx;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   .checkbox-calc {
     line-height: 100rpx;
     flex: 2;
@@ -87,7 +91,7 @@ import {
     updateList: CAR_INIT
   }
 )
-export default class DetailBtn extends wepy.component {
+export default class CarBtn extends wepy.component {
   components = {}
   data = {}
   methods = {
@@ -116,6 +120,9 @@ export default class DetailBtn extends wepy.component {
       if (this.selectedCids.length === 0) {
         return this.showBtnToast()
       }
+      wepy.navigateTo({
+        url: 'book'
+      })
     },
     dele() {
       const cids = this.selectedCids

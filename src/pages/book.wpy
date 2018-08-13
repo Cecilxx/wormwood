@@ -1,0 +1,137 @@
+<!--  -->
+<template>
+  <view class='container'>
+    <cellOne :bottom="bottom">
+      请选择收货地址
+    </cellOne>
+    <cellTwo :bottom="bottom" extraTxt="在线支付" @click.user="onPaymentType" :extraTxt.sync="paymentText">
+      支付方式
+    </cellTwo>
+    <view class="production-wrap">
+      <repeat for="{{productions}}" key="index" index="index" item="item">
+          <view class="production-wrap-item">
+            <cell :showIcon="showIcon">
+              <priceCard :info="item" />
+            </cell>
+          </view>
+      </repeat>
+    </view>
+    <cellFour :bottom="bottom" :showIcon="showIcon">
+      运费：￥{{postage}}
+    </cellFour>
+    <cellFive :bottom="bottom" :showIcon="showIcon">
+      <view>买家留言：</view>
+      <input placeholder="请填写备注" />
+    </cellFive>
+
+    <bookBtn />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import { asyncBookInit } from 'store/actions/book'
+import Cell from 'components/common/cell'
+import PriceCard from 'components/common/priceCard'
+import BookBtn from 'components/book/bookBtn'
+
+@connect(
+  {
+    paymentList(state) {
+      console.log(state.book)
+      return state.book.paymentList
+    },
+    paymentIndex(state) {
+      return state.book.paymentIndex
+    },
+    addressList(state) {
+      return state.book.addressList
+    },
+    addressId(state) {
+      return state.book.addressId
+    },
+    productions(state) {
+      return state.book.productions
+    },
+    postage(state) {
+      return state.book.postage
+    }
+  },
+  {
+    asyncBookInit
+  }
+)
+export default class Book extends wepy.page {
+  config = {
+    navigationBarTitleText: 'book'
+  }
+  data = {
+    bottom: 10,
+    showIcon: false
+  }
+  components = {
+    cell: Cell,
+    cellOne: Cell,
+    cellTwo: Cell,
+    cellThree: Cell,
+    cellFour: Cell,
+    cellFive: Cell,
+    priceCard: PriceCard,
+    bookBtn: BookBtn
+  }
+  methods = {
+    onPaymentType() {
+      const itemList = this.paymentTypes.map(e => e.type)
+      const _this = this
+      wepy.showActionSheet({
+        itemList: itemList, // 按钮的文字数组，数组长度最大为6个,
+        success(res) {
+          _this.paymentIndex = res.tapIndex
+          _this.$apply()
+        }
+      })
+    }
+  }
+  events = {}
+  watch = {}
+  computed = {
+    paymentText() {
+      console.log(this.paymentList)
+      return (
+        this.paymentList &&
+        this.paymentList[this.paymentIndex] &&
+        this.paymentList[this.paymentIndex].type
+      )
+    },
+    paymentId() {
+      return (
+        this.paymentList &&
+        this.paymentList[this.paymentIndex] &&
+        this.paymentList[this.paymentIndex].payid
+      )
+    }
+  }
+  onLoad() {
+    this.methods.asyncBookInit()
+  }
+  onShow() {}
+  onUnLoad() {}
+}
+</script>
+
+<style lang='less' scoped>
+.container {
+  margin-top: 1rpx;
+  .production-wrap {
+    margin-bottom: 10rpx;
+    &-item {
+      border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+
+      &:nth-last-child(1) {
+        border: 0;
+      }
+    }
+  }
+}
+</style>
