@@ -6,7 +6,7 @@
     </view>
     <view class="cell-extra">
       <view wx:if="{{ extraTxt }}" class="cell-extra__text">{{ extraTxt }}</view>
-      <view wx:if="{{ showIcon }}" class="cell-extra__icon">></view>
+      <image wx:if="{{ showIcon }}" class="cell-extra__icon" src='../../images/right.png' />
     </view>
   </view>
 </template>
@@ -45,10 +45,7 @@ export default class Example extends wepy.component {
 
   computed = {}
 
-  onLoad() {
-    console.log(this.bottom)
-    console.log(this.showIcon)
-  }
+  onLoad() {}
 
   onShow() {}
 }
@@ -70,6 +67,8 @@ export default class Example extends wepy.component {
 
     &__icon {
       margin-left: 10rpx;
+      width: 32rpx;
+      height: 32rpx;
     }
   }
 }

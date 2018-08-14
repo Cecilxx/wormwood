@@ -27,9 +27,7 @@ export default class Example extends wepy.component {
   events = {}
   watch = {}
   computed = {}
-  onLoad() {
-    console.log('3', this.info)
-  }
+  onLoad() {}
   onShow() {}
 }
 </script>

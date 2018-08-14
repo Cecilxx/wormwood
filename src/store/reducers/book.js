@@ -1,9 +1,8 @@
 import { handleActions } from 'redux-actions'
-import { BOOK_INIT } from '../types/book'
+import { BOOK_INIT, BOOK_UPDATE_PAYMENT } from '../types/book'
 
 const init = {
-  addressList: [],
-  addressId: 123,
+  addressInfo: null,
   paymentList: [],
   paymentIndex: 0,
   productions: []
@@ -16,6 +15,12 @@ export default handleActions(
       return {
         ...state,
         ...action.payload
+      }
+    },
+    [BOOK_UPDATE_PAYMENT](state, action) {
+      return {
+        ...state,
+        paymentIndex: action.payload
       }
     }
   },

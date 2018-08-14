@@ -46,25 +46,19 @@ export const asyncBookInit = createAction(BOOK_INIT, () => {
             {
               type: '微信支付',
               payid: '300001'
-            },
-            {
-              type: '支付宝支付',
-              payid: '300002'
             }
           ],
           paymentIndex: 0,
-          addressList: [
-            {
-              type: '上海',
-              aid: '400001'
-            },
-            {
-              type: '北京',
-              aid: '400002'
-            }
-          ],
-          addressId: '40001',
-          postage: 10
+          addressInfo: {
+            name: '刘小溪',
+            mobile: 15222860321,
+            address: '上海市上海市长宁区凌空soho2',
+            aid: '400002',
+            default: false
+          },
+          postage: 10,
+          totalPrice: 1000,
+          currency: '￥'
         })
       }, 1000)
     } catch (error) {

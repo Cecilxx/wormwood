@@ -1,8 +1,9 @@
 <!--  -->
 <template>
   <view class='container'>
-    <cellOne :bottom="bottom">
-      请选择收货地址
+    <cellOne :bottom="bottom" @click.user="onAddress">
+        <addressCard wx:if="{{addressInfo}}" :info.sync="addressInfo" :showBtn="showAddressBtn" class="address-selected" :padding="addressCardPadding"/>
+        <view wx:else>请选择收货地址</view>
     </cellOne>
     <cellTwo :bottom="bottom" extraTxt="在线支付" @click.user="onPaymentType" :extraTxt.sync="paymentText">
       支付方式
@@ -17,14 +18,15 @@
       </repeat>
     </view>
     <cellFour :bottom="bottom" :showIcon="showIcon">
-      运费：￥{{postage}}
+      运费：{{currency}}{{postage}}
     </cellFour>
     <cellFive :bottom="bottom" :showIcon="showIcon">
       <view>买家留言：</view>
       <input placeholder="请填写备注" />
     </cellFive>
 
-    <bookBtn />
+    <view>paymentId: {{ paymentId }}</view>
+    <bookBtn @submit.user="submit"/>
   </view>
 </template>
 
@@ -32,8 +34,10 @@
 import wepy from 'wepy'
 import { connect } from 'wepy-redux'
 import { asyncBookInit } from 'store/actions/book'
+import { BOOK_UPDATE_PAYMENT } from 'store/types/book'
 import Cell from 'components/common/cell'
 import PriceCard from 'components/common/priceCard'
+import AddressCard from 'components/common/addressCard'
 import BookBtn from 'components/book/bookBtn'
 
 @connect(
@@ -45,21 +49,22 @@ import BookBtn from 'components/book/bookBtn'
     paymentIndex(state) {
       return state.book.paymentIndex
     },
-    addressList(state) {
-      return state.book.addressList
-    },
-    addressId(state) {
-      return state.book.addressId
+    addressInfo(state) {
+      return state.book.addressInfo
     },
     productions(state) {
       return state.book.productions
     },
     postage(state) {
       return state.book.postage
+    },
+    currency(state) {
+      return state.book.currency
     }
   },
   {
-    asyncBookInit
+    asyncBookInit,
+    updatePayment: BOOK_UPDATE_PAYMENT
   }
 )
 export default class Book extends wepy.page {
@@ -68,7 +73,9 @@ export default class Book extends wepy.page {
   }
   data = {
     bottom: 10,
-    showIcon: false
+    showIcon: false,
+    showAddressBtn: false,
+    addressCardPadding: 0
   }
   components = {
     cell: Cell,
@@ -78,17 +85,41 @@ export default class Book extends wepy.page {
     cellFour: Cell,
     cellFive: Cell,
     priceCard: PriceCard,
-    bookBtn: BookBtn
+    bookBtn: BookBtn,
+    addressCard: AddressCard
   }
   methods = {
     onPaymentType() {
-      const itemList = this.paymentTypes.map(e => e.type)
+      const itemList = this.paymentList.map(e => e.type)
       const _this = this
       wepy.showActionSheet({
         itemList: itemList, // 按钮的文字数组，数组长度最大为6个,
         success(res) {
-          _this.paymentIndex = res.tapIndex
-          _this.$apply()
+          _this.methods.updatePayment(res.tapIndex)
+        }
+      })
+    },
+    onAddress() {
+      wepy.navigateTo({ url: 'address' })
+    },
+    submit() {
+      // wepy.requestPayment({
+      //   timeStamp: +new Date(), // 时间戳从1970年1月1日00:00:00至今的秒数,即当前的时间,
+      //   nonceStr: Math.random()
+      //     .toString(32)
+      //     .substr(2), // 随机字符串，长度为32个字符以下,
+      //   package: 'package', // 统一下单接口返回的 prepay_id 参数值，提交格式如：prepay_id=*,
+      //   signType: 'MD5', // 签名算法，暂支持 MD5,
+      //   paySign: 'paySign', // 签名,具体签名方案参见小程序支付接口文档,
+      //   success: res => {},
+      //   fail: () => {},
+      //   complete: () => {}
+      // })
+      wepy.showToast({
+        title: '提交成功', // 提示的内容,
+        icon: 'success', // 图标
+        success() {
+          wepy.navigateTo({ url: 'order' })
         }
       })
     }
@@ -97,7 +128,6 @@ export default class Book extends wepy.page {
   watch = {}
   computed = {
     paymentText() {
-      console.log(this.paymentList)
       return (
         this.paymentList &&
         this.paymentList[this.paymentIndex] &&
@@ -131,6 +161,11 @@ export default class Book extends wepy.page {
       &:nth-last-child(1) {
         border: 0;
       }
+    }
+  }
+  .address-card {
+    .info-wrap {
+      padding: 0;
     }
   }
 }

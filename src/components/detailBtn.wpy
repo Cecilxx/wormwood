@@ -40,8 +40,8 @@
       <homeIcon @click.user="clickHome" :src.sync="indexUrl" :text.sync="indexText" class="act" />
       <loveIcon @click.user="clickLove" :src.sync="loveUrl" :text.sync="loveText" class="act" />
     </view>
-    <view class="btn left" @tap="clickCar">结算</view>
-    <view class="btn" @tap="clickBuy">删除</view>
+    <view class="btn left" @tap="clickCar">加入购物车</view>
+    <view class="btn" @tap="clickBuy">立即购买</view>
   </view>
 </template>
 

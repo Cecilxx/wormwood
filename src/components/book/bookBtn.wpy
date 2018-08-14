@@ -31,19 +31,34 @@
 
 <template>
   <view class="book-btn-wrap">
-    <view class="totalprice">总计：<text class="price-info">￥{{totalPrice}}</text></view>
+    <view class="totalprice">总计：<text class="price-info">{{currency}}{{totalPrice}}</text></view>
     <view class="btn" @tap="submit">提交</view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-// import { connect } from 'wepy-redux'
+import { connect } from 'wepy-redux'
 
+@connect(
+  {
+    totalPrice(state) {
+      return state.book.totalPrice
+    },
+    currency(state) {
+      return state.book.currency
+    }
+  },
+  {}
+)
 export default class BookBtn extends wepy.component {
   components = {}
   data = {}
-  methods = {}
+  methods = {
+    submit() {
+      this.$emit('submit')
+    }
+  }
   showBtnToast() {
     wepy.showToast({
       title: '请先选中收货地址', // 提示的内容,

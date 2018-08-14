@@ -14,18 +14,10 @@ view {
 }
 checkbox .wx-checkbox-input {
   border-radius: 50%;
-  // border: 1rpx solid rgba(0, 0, 0, 0.1);
-  // height: 33rpx;
-  // width: 33rpx;
-  // margin-top: 1rpx;
-  // margin-left: 1rpx;
 }
 /* checkbox选中时样式 */
 checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
-  // border-radius: 50%;
-  // border: 1rpx solid orangered;
   color: orange;
-  // background: orangered;
 }
 </style>
 
@@ -47,7 +39,8 @@ export default class extends wepy.app {
       'pages/car',
       'pages/list',
       'pages/detail',
-      'pages/book'
+      'pages/book',
+      'pages/address'
     ],
     window: {
       backgroundTextStyle: 'light',

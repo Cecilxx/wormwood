@@ -1,1 +1,2 @@
 export const BOOK_INIT = 'BOOK_INIT'
+export const BOOK_UPDATE_PAYMENT = 'BOOK_UPDATE_PAYMENT'
