@@ -1,8 +1,9 @@
 <style lang="less">
 .container {
-  font-size: 12px;
+  font-size: 28rpx;
   box-sizing: border-box;
   height: 100%;
+  margin-top: 1rpx;
 }
 page {
   background: rgb(247, 247, 251);
@@ -40,7 +41,8 @@ export default class extends wepy.app {
       'pages/list',
       'pages/detail',
       'pages/book',
-      'pages/address'
+      'pages/address',
+      'pages/order'
     ],
     window: {
       backgroundTextStyle: 'light',

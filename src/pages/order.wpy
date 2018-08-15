@@ -1,0 +1,42 @@
+<!--  -->
+<template>
+  <view class='container'>
+    <tabs :defaultIndex="activeIndex" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import Tabs from 'components/order/tabs'
+export default class Example extends wepy.page {
+  config = {
+    navigationBarTitleText: 'order'
+  }
+
+  data = {
+    activeIndex: 1
+  }
+
+  components = {
+    tabs: Tabs
+  }
+
+  methods = {}
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  onLoad() {}
+
+  onShow() {}
+}
+</script>
+
+<style lang='less' scoped>
+.container {
+  // margin-top: 1rpx;
+}
+</style>

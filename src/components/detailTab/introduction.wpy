@@ -28,9 +28,13 @@ export default class Example extends wepy.component {
 
   computed = {}
 
-  onLoad() {}
+  onLoad() {
+    console.log('tab introduction onload')
+  }
 
-  onShow() {}
+  onShow() {
+    console.log('tab introduction onshow')
+  }
 }
 </script>
 

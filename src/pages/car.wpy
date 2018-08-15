@@ -51,7 +51,4 @@ export default class Example extends wepy.page {
 </script>
 
 <style lang='less' scoped>
-.container {
-  margin-top: 1rpx;
-}
 </style>

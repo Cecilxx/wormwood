@@ -1,0 +1,46 @@
+<!--  -->
+<template>
+  <view class="order-list">
+    <view wx:if="{{ orderList.length > 0 }}">
+      <repeat for="{{orderList}}" key="index" index="index" item="item">
+        <orderCard :bottom="bottom" :info="item" />
+      </repeat>
+    </view>
+    <view wx:else class="empty">暂无数据！</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import OrderCard from 'components/common/orderCard'
+@connect({
+  orderList(state) {
+    return state.order.orderList
+  }
+})
+export default class Example extends wepy.component {
+  props = {}
+  data = {
+    bottom: 10
+  }
+  components = {
+    orderCard: OrderCard
+  }
+  methods = {}
+  events = {}
+  watch = {}
+  computed = {}
+  onLoad() {}
+  onShow() {}
+}
+</script>
+
+<style lang='less' scoped>
+.order-list {
+  .empty {
+    text-align: center;
+    margin-top: 40rpx;
+  }
+}
+</style>

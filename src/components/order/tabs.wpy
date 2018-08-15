@@ -1,0 +1,145 @@
+<style lang="less" scoped>
+.navbar {
+  .page,
+  .page__bd {
+    height: 100%;
+  }
+  .page__bd {
+    padding-bottom: 0;
+    .weui-tab {
+      position: relative;
+      height: 100%;
+      .weui-navbar {
+        display: flex;
+        position: relative;
+        white-space: nowrap;
+        overflow: scroll;
+        border-bottom: 1rpx solid #cccccc;
+        background: #fff;
+        .weui-navbar__item {
+          position: relative;
+          display: inline-block;
+          flex: 1;
+          padding: 26rpx 0;
+          text-align: center;
+          font-size: 0;
+          &.weui-bar__item_on {
+            color: #1aad19;
+          }
+          .weui-navbar__title {
+            display: inline-block;
+            font-size: 28rpx;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-wrap: normal;
+          }
+        }
+        .weui-navbar__slider {
+          position: absolute;
+          content: ' ';
+          left: 0;
+          bottom: 0;
+          height: 4rpx;
+          background-color: #1aad19;
+          transition: transform 0.3s;
+        }
+      }
+      .weui-tab__content {
+        // padding: 20rpx;
+      }
+    }
+  }
+}
+</style>
+
+<template>
+  <view class="navbar page">
+    <view class="page__bd">
+      <view class="weui-tab">
+        <view class="weui-navbar">
+          <view wx:for="{{tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick({{index}})">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+          <view class="weui-navbar__slider" style="left: {{sliderLeft}}rpx; width: {{sliderWidth}}rpx; transform: translateX({{sliderOffset}}rpx); -webkit-transform: translateX({{sliderOffset}}rpx"></view>
+        </view>
+        <view class="weui-tab__panel">
+          <view class="weui-tab__content">
+            <orderList />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import OrderList from 'components/order/orderList'
+import { connect } from 'wepy-redux'
+import { asyncOrderInit } from 'store/actions/order'
+
+@connect(
+  {},
+  {
+    asyncOrderInit
+  }
+)
+export default class NavBar extends wepy.component {
+  components = {
+    orderList: OrderList
+  }
+  props = {
+    defaultIndex: {
+      type: Number,
+      default: 0
+    }
+  }
+  data = {
+    tabs: ['全部', '待付款', '待发货', '待收货', '已完成'],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0,
+    sliderWidth: 0
+  }
+  methods = {
+    tabClick(index, e) {
+      this.sliderOffset = e.currentTarget.offsetLeft * 2
+      this.activeIndex = ~~e.currentTarget.id
+      this.fetchData(index)
+    }
+  }
+  fetchData(index) {
+    wepy.showLoading({
+      title: '', // 提示的内容,
+      mask: false, // 显示透明蒙层，防止触摸穿透,
+      success: res => {
+        this.methods.asyncOrderInit({ filter: index }).then(() => {
+          wepy.hideLoading()
+        })
+      }
+    })
+  }
+  onLoad() {
+    let windowWidth = ''
+    let itemWidth = ''
+    const temp = 50
+
+    wepy.getSystemInfo({
+      success: res => {
+        windowWidth = res.windowWidth
+      }
+    })
+    itemWidth = windowWidth / this.tabs.length * 2
+
+    this.activeIndex = this.defaultIndex
+    this.sliderWidth = itemWidth - temp
+    this.sliderLeft = temp / 2
+    this.sliderOffset = itemWidth * this.activeIndex
+    this.$apply()
+
+    this.fetchData(this.defaultIndex)
+  }
+}
+</script>

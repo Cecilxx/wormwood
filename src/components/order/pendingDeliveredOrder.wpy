@@ -1,16 +1,10 @@
 <!--  -->
 <template>
-  <view>{{ tabInfo.evaluation }}</view>
+  <view class='container'>delivered</view>
 </template>
 
 <script>
 import wepy from 'wepy'
-import { connect } from 'wepy-redux'
-@connect({
-  tabInfo(state) {
-    return state.detail.initData.tabInfo
-  }
-})
 export default class Example extends wepy.component {
   props = {}
 
@@ -27,14 +21,14 @@ export default class Example extends wepy.component {
   computed = {}
 
   onLoad() {
-    console.log('tab evaluation onload')
+    console.log('delivered onload')
   }
 
   onShow() {
-    console.log('tab evaluation onshow')
+    console.log('delivered onshow')
   }
 }
 </script>
 
-<style lang='less' scoped>
+<style lang='less'>
 </style>

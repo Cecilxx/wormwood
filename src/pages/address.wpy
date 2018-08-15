@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <view class='address'>
+  <view class='container'>
     <radio-group class="radio-group" @change="radioChange">
       <repeat for="{{addressList}}" key="index" index="index" item="item">
         <addressCard :info="item" :bottom="10" @click.user="clickAddress"/>
@@ -52,8 +52,4 @@ export default class Example extends wepy.page {
 </script>
 
 <style lang='less' scoped>
-.address {
-  margin-top: 1rpx;
-  font-size: 28rpx;
-}
 </style>

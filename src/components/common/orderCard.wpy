@@ -1,0 +1,121 @@
+<!--  -->
+<template>
+  <view class='order-card' style="margin-bottom: {{bottom}}rpx" @tap="click">
+    <view class="item id">订单号：{{info.oid}}</view>
+    <!-- <view class="item detail">
+      <image src="{{info.imgUrl}}" class="img" lazy-load="true" />
+      <view class="contanier">
+        <view class="title">{{ info.title }}</view>
+        <view class="specification">规格：{{ info.specification.text }}</view>
+        <view class="pricecount">
+          <text class="price">{{ info.currency }}{{ info.price }}</text>
+          <text class="count">x{{ info.count }}</text>
+        </view>
+      </view>
+    </view> -->
+    <view class="item detail">
+      <repeat for="{{info.productions}}" key="index" index="index" item="item">
+        <view class="production-item">
+          <priceCard :info.sync="item"/>
+        </view>
+    </repeat>
+    </view>
+    <view class="item price">
+      <view class="total">合计：{{info.currency}}{{info.totalPrice}}</view>
+      <button size="mini" class="cancel">取消</button>
+      <button size="mini">付款</button>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import PriceCard from 'components/common/priceCard'
+export default class Example extends wepy.component {
+  props = {
+    info: {
+      type: Object,
+      default: {}
+    },
+    bottom: {
+      type: Number,
+      default: 0
+    }
+  }
+  data = {}
+  components = {
+    priceCard: PriceCard
+  }
+  methods = {
+    click() {
+      this.$emit('click', this.info.oid)
+    }
+  }
+  events = {}
+  watch = {}
+  computed = {}
+  onLoad() {}
+  onShow() {}
+}
+</script>
+
+<style lang='less' scoped>
+.order-card {
+  font-size: 28rpx;
+  background: #fff;
+  .item {
+    padding: 20rpx;
+  }
+  .id {
+    border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+  }
+  .detail {
+    border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+    .production-item {
+      padding: 12rpx 0 6rpx 0;
+      border-top: 1px dashed rgba(0, 0, 0, 0.1);
+      &:nth-of-type(1) {
+        padding-top: 0;
+        border-top: 0;
+      }
+    }
+    // box-sizing: border-box;
+    // width: 100%;
+    // .img {
+    //   width: 140rpx;
+    //   height: 140rpx;
+    //   max-height: 180px;
+    //   margin-right: 20rpx;
+    // }
+    // .contanier {
+    //   flex: 1;
+    //   .title {
+    //     font-size: 28rpx;
+    //     margin-bottom: 10rpx;
+    //   }
+    //   .specification {
+    //     margin-bottom: 10rpx;
+    //     color: #999;
+    //   }
+    //   .pricecount {
+    //     display: flex;
+    //     .price {
+    //       flex: 1;
+    //       color: red;
+    //     }
+    //     .count {
+    //     }
+    //   }
+    // }
+  }
+  .price {
+    display: flex;
+    .total {
+      flex: 1;
+    }
+    .cancel {
+      margin-right: 20rpx;
+    }
+  }
+}
+</style>
