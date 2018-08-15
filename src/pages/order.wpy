@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <view class='container'>
-    <tabs :defaultIndex="activeIndex" />
+    <tabs />
   </view>
 </template>
 
@@ -13,9 +13,7 @@ export default class Example extends wepy.page {
     navigationBarTitleText: 'order'
   }
 
-  data = {
-    activeIndex: 1
-  }
+  data = {}
 
   components = {
     tabs: Tabs

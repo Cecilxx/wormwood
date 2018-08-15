@@ -1,8 +1,9 @@
 import { handleActions } from 'redux-actions'
-import { ORDER_INIT } from '../types/order'
+import { ORDER_INIT, ORDER_SET_TAB_INDEX } from '../types/order'
 
 const init = {
-  orderList: []
+  orderList: [],
+  defaultIndex: 0
 }
 
 export default handleActions(
@@ -12,6 +13,13 @@ export default handleActions(
       return {
         ...state,
         orderList: action.payload
+      }
+    },
+    [ORDER_SET_TAB_INDEX](state, action) {
+      console.log('set tab index', action.payload)
+      return {
+        ...state,
+        defaultIndex: action.payload
       }
     }
   },

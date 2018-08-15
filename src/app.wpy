@@ -59,13 +59,13 @@ export default class extends wepy.app {
           iconPath: 'images/home.png',
           selectedIconPath: 'images/home_selected.png',
           pagePath: 'pages/index',
-          text: 'text1'
+          text: '首页'
         },
         {
           iconPath: 'images/car.png',
           selectedIconPath: 'images/car_selected.png',
           pagePath: 'pages/car',
-          text: 'text2'
+          text: '购物车'
         },
         {
           iconPath: 'images/my.png',
@@ -84,36 +84,6 @@ export default class extends wepy.app {
   constructor() {
     super()
     this.use('requestfix')
-  }
-
-  onLaunch() {
-    this.testAsync()
-  }
-
-  sleep(s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
-    })
-  }
-
-  async testAsync() {
-    const data = await this.sleep(3)
-    console.log(data)
-  }
-
-  getUserInfo(cb) {
-    const that = this
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo
-    }
-    wepy.getUserInfo({
-      success(res) {
-        that.globalData.userInfo = res.userInfo
-        cb && cb(res.userInfo)
-      }
-    })
   }
 }
 </script>

@@ -3,38 +3,34 @@
 
 <template>
   <view class="container">
-    this is mine
     <userInfo />
+    <myOrder />
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
 import { connect } from 'wepy-redux'
-import UserInfo from '@/components/userInfo'
+import UserInfo from 'components/mine/userInfo'
+import MyOrder from 'components/mine/myOrder'
 
-@connect({
-  num(state) {
-    return state.counter.num
-  },
-  asyncNum(state) {
-    return state.counter.asyncNum
-  },
-  sumNum(state) {
-    return state.counter.num + state.counter.asyncNum
-  }
-})
+@connect({})
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: 'mine'
+    navigationBarTitleText: '我的'
   }
   components = {
-    userInfo: UserInfo
+    userInfo: UserInfo,
+    myOrder: MyOrder
   }
   mixins = []
   data = {}
   computed = {}
-  methods = {}
+  methods = {
+    getUserInfo(cb) {
+      console.log(cb)
+    }
+  }
   events = {}
 }
 </script>

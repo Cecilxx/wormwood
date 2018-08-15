@@ -2,7 +2,7 @@
 <template>
   <view @tap="click">
     <view class="icon-box"><image class="icon" src='{{src}}' /></view>
-    <view class="text">{{ text }}</view>
+    <view class="text" style="{{textStyle}}">{{ text }}</view>
   </view>
 </template>
 
@@ -14,6 +14,9 @@ export default class Example extends wepy.component {
       type: String
     },
     text: {
+      type: String
+    },
+    textStyle: {
       type: String
     }
   }

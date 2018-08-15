@@ -1,0 +1,93 @@
+<!--  -->
+<template>
+  <view class='myorder'>
+    <view class="title" @tap="goToOrderList({{0}})">
+      我的订单
+    </view>
+    <view class="actions">
+      <view class="item" @tap="goToOrderList({{1}})">
+        <paymentIcon text="待付款" :src="paymentIconSrc" textStyle="color: #333; font-size: 24rpx; margin-top: 10rpx" />
+      </view>
+      <view class="item" @tap="goToOrderList({{2}})">
+        <deliveredIcon text="待发货" :src="deliveredIconSrc" textStyle="color: #333; font-size: 24rpx; margin-top: 10rpx"/>
+      </view>
+      <view class="item" @tap="goToOrderList({{3}})">
+        <receiptIcon text="待收货" :src="receiptIconSrc" textStyle="color: #333; font-size: 24rpx; margin-top: 10rpx"/>
+      </view>
+      <view class="item" @tap="goToOrderList({{4}})">
+        <reviewIcon text="待评价" :src="reviewIconSrc" textStyle="color: #333; font-size: 24rpx; margin-top: 10rpx"/>
+      </view>
+      <view class="item">
+        <rebackIcon text="退款/售后" :src="rebackIconSrc" textStyle="color: #333; font-size: 24rpx; margin-top: 10rpx"/>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import ActIcon from 'components/common/actIcon'
+import { review, payment, delivered, receipt, reback } from '@/utils/img'
+import { ORDER_SET_TAB_INDEX } from 'store/types/order'
+import { connect } from 'wepy-redux'
+
+@connect(
+  {},
+  {
+    setOrderTabIndex: ORDER_SET_TAB_INDEX
+  }
+)
+export default class Example extends wepy.component {
+  props = {}
+
+  data = {
+    reviewIconSrc: review,
+    paymentIconSrc: payment,
+    deliveredIconSrc: delivered,
+    receiptIconSrc: receipt,
+    rebackIconSrc: reback
+  }
+
+  components = {
+    reviewIcon: ActIcon,
+    paymentIcon: ActIcon,
+    deliveredIcon: ActIcon,
+    receiptIcon: ActIcon,
+    rebackIcon: ActIcon
+  }
+
+  methods = {
+    goToOrderList(index) {
+      this.methods.setOrderTabIndex(index)
+      wepy.navigateTo({ url: 'order' })
+    }
+  }
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  onLoad() {}
+
+  onShow() {}
+}
+</script>
+
+<style lang='less'>
+.myorder {
+  background: #fff;
+  .title {
+    padding: 20rpx;
+    border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+  }
+  .actions {
+    display: flex;
+    padding: 20rpx 0;
+    .item {
+      flex: 1;
+    }
+  }
+}
+</style>

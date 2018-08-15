@@ -81,7 +81,11 @@ import { connect } from 'wepy-redux'
 import { asyncOrderInit } from 'store/actions/order'
 
 @connect(
-  {},
+  {
+    defaultIndex(state) {
+      return state.order.defaultIndex
+    }
+  },
   {
     asyncOrderInit
   }
@@ -90,14 +94,9 @@ export default class NavBar extends wepy.component {
   components = {
     orderList: OrderList
   }
-  props = {
-    defaultIndex: {
-      type: Number,
-      default: 0
-    }
-  }
+
   data = {
-    tabs: ['全部', '待付款', '待发货', '待收货', '已完成'],
+    tabs: ['全部', '待付款', '待发货', '待收货', '待评价'],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
@@ -111,6 +110,7 @@ export default class NavBar extends wepy.component {
     }
   }
   fetchData(index) {
+    console.log(index)
     wepy.showLoading({
       title: '', // 提示的内容,
       mask: false, // 显示透明蒙层，防止触摸穿透,
@@ -139,7 +139,7 @@ export default class NavBar extends wepy.component {
     this.sliderOffset = itemWidth * this.activeIndex
     this.$apply()
 
-    this.fetchData(this.defaultIndex)
+    this.fetchData(this.activeIndex)
   }
 }
 </script>

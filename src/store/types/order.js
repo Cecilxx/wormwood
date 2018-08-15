@@ -1,1 +1,2 @@
 export const ORDER_INIT = 'ORDER_INIT'
+export const ORDER_SET_TAB_INDEX = 'ORDER_SET_TAB_INDEX'
